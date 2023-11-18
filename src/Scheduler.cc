@@ -49,7 +49,7 @@ void Scheduler::handleMessage(cMessage *msg)
             delete(msg);
         }
         else if (msg->arrivedOn("rxPriority", i)) {
-            priority[i] = msg->par("q1_priority").doubleValue();
+            priority[i] = msg->par("q1_priority").doubleValue() * (double)(3-i);
             delete(msg);
         }
     }
@@ -68,7 +68,7 @@ void Scheduler::handleMessage(cMessage *msg)
                 min = priority[i];
             }
 
-            EV << "Priority for " << i << " " << priority[i] << endl;
+            EV << "Priority for " << i << " is " << priority[i] << endl;
         }
 
         send(cmd, "txScheduling", curr_index);
