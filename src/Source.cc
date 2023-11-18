@@ -37,9 +37,24 @@ void Source::handleMessage(cMessage *msg)
 {
     ASSERT(msg == sendMessageEvent);
 
+    int priorityLevel; // Calculate the priority level here for the current user
+    //generateIPPacket(priorityLevel);
     cMessage *job = new cMessage("job");
     send(job, "txPackets");
     double sendingTime;
+    /*netwload = data_generated/ transfer_rate
+         *
+         * data_generated = nrUsers* nrPackets *PacketLength / sendingTime
+         * PacketLength = 1
+         * nrPackets = 1
+         *
+         * transfer_rate = 10 ^ 6
+         *
+         * netwload = (nrUsers*nrPackets*PacketLength)/(sendingTime*nr_of_channels)
+         *
+         *sendingTime =  (nrUsers*nrPackets*PacketLength*schedulingCycle)/(netwload*nr_of_channels)
+         *
+         * */
     sendingTime = par("sendIaTime").doubleValue();
     //scheduleAt(simTime()+ exponential(sendingTime));
     scheduleAt(simTime()+ exponential(sendingTime), sendMessageEvent);
@@ -47,15 +62,3 @@ void Source::handleMessage(cMessage *msg)
     //scheduleAt(simTime()+par("sendIaTime").doubleValue(), sendMessageEvent);
 }
 
-
-/*
-void Source::initialize()
-{
-    // TODO - Generated method body
-}
-
-void Source::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
-}
-*/

@@ -66,6 +66,9 @@ network Network
         hpq.txPackets --> sink.rxPackets[0];
         mpq.txPackets --> sink.rxPackets[1];
         lpq.txPackets --> sink.rxPackets[2];
+        hpq.txInfo --> scheduler.rxInfo[0];
+        mpq.txInfo --> scheduler.rxInfo[1];
+        lpq.txInfo --> scheduler.rxInfo[2];
 //        scheduler.txScheduling[i] --> user[i].rxScheduling;
 //        user[i].txPackets --> sink.rxPackets[i];
 

@@ -23,6 +23,7 @@ using namespace omnetpp;
 /**
  * TODO - Generated class
  */
+
 class Source : public cSimpleModule
 {
 private:
@@ -34,6 +35,7 @@ private:
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    void generateIPPacket(int priorityLevel);
 };
 
 #endif

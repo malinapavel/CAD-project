@@ -31,6 +31,7 @@ public:
 private:
     cMessage *selfMsg;
     int NrUsers;
+    int q[3];
    // int userWeights[3];
 
   protected:

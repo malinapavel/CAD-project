@@ -24,18 +24,29 @@ void MyQ::initialize()
 
 void MyQ::handleMessage(cMessage *msg)
 {
-    //int i;
-    //int ql;
-    //ql = queue.getLength();
+    int ql;
+
     if (msg->arrivedOn("rxPackets")){
         queue.insert(msg);
     } else if (msg->arrivedOn("rxScheduling")){
         //read parameters from msg
         delete msg;
         //empty the queue !
-        while(!queue.isEmpty()){
+        if(!queue.isEmpty()) {
           msg = (cMessage *)queue.pop();
           send(msg, "txPackets");
         }
     }
+
+    ql = queue.getLength();
+
+    cMessage *qInfo = new cMessage("qInfo");
+    qInfo->addPar("ql_info");
+    qInfo->par("ql_info").setLongValue(ql);
+
+//    //only for test
+//    int i =  getParentModule()->getIndex();
+//    long ql_info_tst = qInfo->par("ql_info");
+//    EV << "ql[" << i<<"] = " << ql << " ql_info_tst = " << ql_info_tst << endl;
+    send(qInfo, "txInfo");
 }

@@ -17,8 +17,9 @@ simple Scheduler
       parameters:
         @display("i=block/dispatch");
         double schedulingPeriod @unit(ms) = default(1ms);
-        int gateSize=default(3);//me, dt
+        int gateSize=default(10);//me, dt
 
     gates:
         output txScheduling[gateSize];
+        input rxInfo[gateSize];
 }

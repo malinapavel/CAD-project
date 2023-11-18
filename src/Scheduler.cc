@@ -39,15 +39,22 @@ void Scheduler::initialize()
 
 void Scheduler::handleMessage(cMessage *msg)
 {
+    for(int i =0; i<NrUsers;i++) {
+        if (msg->arrivedOn("rxInfo", i)){
+            q[i]= msg->par("ql_info");
+            delete(msg);
+        }
+    }
   //  int userWeights[NrUsers];
     if (msg == selfMsg) {
         for(int i =0;i<NrUsers;i++){
             cMessage *cmd = new cMessage("cmd");
             //set parameter value, e.g., nr of blocks to be sent from the queue by user i
-            send(cmd,"txScheduling",i);
+            if(q[i] > 0){
+                send(cmd,"txScheduling",i);
+            }
         }
         scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
 
     }
-
 }

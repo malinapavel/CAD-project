@@ -20,4 +20,5 @@ simple MyQ
         input rxScheduling;
         input rxPackets[NrInputs];
         output txPackets;
+        output txInfo;
 }
