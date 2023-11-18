@@ -30,8 +30,9 @@ public:
     ~Scheduler();
 private:
     cMessage *selfMsg;
-    int NrUsers;
+    int nrQueues;
     int q[3];
+    double priority[3];
    // int userWeights[3];
 
   protected:

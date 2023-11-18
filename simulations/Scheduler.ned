@@ -22,4 +22,5 @@ simple Scheduler
     gates:
         output txScheduling[gateSize];
         input rxInfo[gateSize];
+        input rxPriority[gateSize];
 }

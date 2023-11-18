@@ -69,6 +69,9 @@ network Network
         hpq.txInfo --> scheduler.rxInfo[0];
         mpq.txInfo --> scheduler.rxInfo[1];
         lpq.txInfo --> scheduler.rxInfo[2];
+        hpq.txPriority --> scheduler.rxPriority[0];
+        mpq.txPriority --> scheduler.rxPriority[1];
+        lpq.txPriority --> scheduler.rxPriority[2];
 //        scheduler.txScheduling[i] --> user[i].rxScheduling;
 //        user[i].txPackets --> sink.rxPackets[i];
 

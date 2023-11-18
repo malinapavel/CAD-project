@@ -36,6 +36,11 @@ void MyQ::handleMessage(cMessage *msg)
           msg = (cMessage *)queue.pop();
           send(msg, "txPackets");
         }
+
+        cMessage *qPriority = new cMessage("qPriority");
+        qPriority->addPar("q1_priority");
+        qPriority->par("q1_priority").setDoubleValue(simTime().dbl());
+        send(qPriority, "txPriority");
     }
 
     ql = queue.getLength();
@@ -43,10 +48,5 @@ void MyQ::handleMessage(cMessage *msg)
     cMessage *qInfo = new cMessage("qInfo");
     qInfo->addPar("ql_info");
     qInfo->par("ql_info").setLongValue(ql);
-
-//    //only for test
-//    int i =  getParentModule()->getIndex();
-//    long ql_info_tst = qInfo->par("ql_info");
-//    EV << "ql[" << i<<"] = " << ql << " ql_info_tst = " << ql_info_tst << endl;
-    send(qInfo, "txInfo");
+    sendDelayed(qInfo, 0.1, "txInfo");
 }

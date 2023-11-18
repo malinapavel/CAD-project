@@ -32,29 +32,47 @@ Scheduler::~Scheduler()
 
 void Scheduler::initialize()
 {
-    NrUsers = par("gateSize").intValue();
+    nrQueues = par("gateSize").intValue();
     selfMsg = new cMessage("selfMsg");
     scheduleAt(simTime(), selfMsg);
+
+    for (int i = 0; i<nrQueues; i++) {
+        priority[i] = 0;
+    }
 }
 
 void Scheduler::handleMessage(cMessage *msg)
 {
-    for(int i =0; i<NrUsers;i++) {
+    for(int i = 0; i<nrQueues;i++) {
         if (msg->arrivedOn("rxInfo", i)){
             q[i]= msg->par("ql_info");
             delete(msg);
         }
-    }
-  //  int userWeights[NrUsers];
-    if (msg == selfMsg) {
-        for(int i =0;i<NrUsers;i++){
-            cMessage *cmd = new cMessage("cmd");
-            //set parameter value, e.g., nr of blocks to be sent from the queue by user i
-            if(q[i] > 0){
-                send(cmd,"txScheduling",i);
-            }
+        else if (msg->arrivedOn("rxPriority", i)) {
+            priority[i] = msg->par("q1_priority").doubleValue();
+            delete(msg);
         }
-        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
+    }
 
+
+    if (msg == selfMsg) {
+        double min = priority[0];
+        int curr_index = 0;
+
+        cMessage *cmd = new cMessage("cmd");
+
+        for(int i =0;i<nrQueues;i++){
+
+            if(q[i] > 0 && priority[i] < min){
+                curr_index = i;
+                min = priority[i];
+            }
+
+            EV << "Priority for " << i << " " << priority[i] << endl;
+        }
+
+        send(cmd, "txScheduling", curr_index);
+
+        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
     }
 }
