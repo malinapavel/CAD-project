@@ -49,29 +49,36 @@ void Scheduler::handleMessage(cMessage *msg)
             delete(msg);
         }
         else if (msg->arrivedOn("rxPriority", i)) {
-            priority[i] = msg->par("q1_priority").doubleValue() * (double)(3-i);
+            priority[i] = msg->par("q1_priority").doubleValue() * (double)(3 - i);
             delete(msg);
         }
     }
 
 
     if (msg == selfMsg) {
-        double min = priority[0];
-        int curr_index = 0;
+        double min = priority[2];
+        int curr_index = 2;
 
         cMessage *cmd = new cMessage("cmd");
 
-        for(int i =0;i<nrQueues;i++){
+        for(int i = nrQueues;i>=0;i--){
 
             if(q[i] > 0 && priority[i] < min){
                 curr_index = i;
+                EV << "Curr min: " << min << " updated to " << priority[i] << endl;
                 min = priority[i];
             }
 
-            EV << "Priority for " << i << " is " << priority[i] << endl;
+            if (i == 2)
+                EV << "Priority for HP is " << priority[i] << endl;
+            else if (i == 1)
+                EV << "Priority for MP is " << priority[i] << endl;
+            else if (i == 0)
+                EV << "Priority for LP is " << priority[i] << endl;
         }
 
         send(cmd, "txScheduling", curr_index);
+        EV << "Sending to index " << curr_index << " with priority of " << priority[curr_index] << endl;
 
         scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
     }
