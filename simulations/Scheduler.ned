@@ -16,6 +16,7 @@ simple Scheduler
 {
       parameters:
         @display("i=block/dispatch");
+        string algorithm = default("wrr");
         double schedulingPeriod @unit(ms) = default(1ms);
         int gateSize=default(3);//me, dt
 

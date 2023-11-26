@@ -61,25 +61,40 @@ void Scheduler::handleMessage(cMessage *msg)
 
         cMessage *cmd = new cMessage("cmd");
 
-        for(int i = nrQueues;i>=0;i--){
+        std::string algorithm = par("algorithm").stringValue();
 
-            if(q[i] > 0 && priority[i] < min){
-                curr_index = i;
-                EV << "Curr min: " << min << " updated to " << priority[i] << endl;
-                min = priority[i];
+        // Weighted Round-Robin
+        if (algorithm == "wrr") {
+            for(int i = nrQueues;i>=0;i--){
+                if(q[i] > 0 && priority[i] < min){
+                    curr_index = i;
+                    EV << "Curr min: " << min << " updated to " << priority[i] << endl;
+                    min = priority[i];
+                }
+
+                if (i == 2)
+                    EV << "Priority for HP is " << priority[i] << endl;
+                else if (i == 1)
+                    EV << "Priority for MP is " << priority[i] << endl;
+                else if (i == 0)
+                    EV << "Priority for LP is " << priority[i] << endl;
             }
 
-            if (i == 2)
-                EV << "Priority for HP is " << priority[i] << endl;
-            else if (i == 1)
-                EV << "Priority for MP is " << priority[i] << endl;
-            else if (i == 0)
-                EV << "Priority for LP is " << priority[i] << endl;
+            EV << "Sending to index " << curr_index << " with priority of " << priority[curr_index] << endl;
+        }
+        // Priority Queue
+        else if (algorithm == "prio") {
+            for (int i = nrQueues; i>=0; i--) {
+                if (q[i] > 0) {
+                    curr_index = i;
+                    break;
+                }
+            }
+
+            EV << "Sending to index " << curr_index << " with no. elements of " << q[curr_index] << endl;
         }
 
         send(cmd, "txScheduling", curr_index);
-        EV << "Sending to index " << curr_index << " with priority of " << priority[curr_index] << endl;
-
         scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
     }
 }
