@@ -49,14 +49,15 @@ void Scheduler::handleMessage(cMessage *msg)
             delete(msg);
         }
         else if (msg->arrivedOn("rxPriority", i)) {
-            priority[i] = msg->par("q1_priority").doubleValue() * (double)(3 - i);
+            priority[i] = msg->par("q1_priority").doubleValue();
             delete(msg);
         }
     }
 
 
     if (msg == selfMsg) {
-        double min = priority[2];
+        double currSimTime = simTime().dbl();
+        double max = 3 * (currSimTime - priority[2]);
         int curr_index = 2;
 
         cMessage *cmd = new cMessage("cmd");
@@ -66,21 +67,22 @@ void Scheduler::handleMessage(cMessage *msg)
         // Weighted Round-Robin
         if (algorithm == "wrr") {
             for(int i = nrQueues;i>=0;i--){
-                if(q[i] > 0 && priority[i] < min){
+                double currPriority = (i+1) * (int)(currSimTime - priority[i]);
+                if(q[i] > 0 && currPriority > max){
                     curr_index = i;
-                    EV << "Curr min: " << min << " updated to " << priority[i] << endl;
-                    min = priority[i];
+                    EV << "Curr max: " << max << " updated to " << currPriority << endl;
+                    max = currPriority;
                 }
 
                 if (i == 2)
-                    EV << "Priority for HP is " << priority[i] << endl;
+                    EV << "Priority for HP is " << currPriority << endl;
                 else if (i == 1)
-                    EV << "Priority for MP is " << priority[i] << endl;
+                    EV << "Priority for MP is " << currPriority << endl;
                 else if (i == 0)
-                    EV << "Priority for LP is " << priority[i] << endl;
+                    EV << "Priority for LP is " << currPriority << endl;
             }
 
-            EV << "Sending to index " << curr_index << " with priority of " << priority[curr_index] << endl;
+            EV << "Sending to index " << curr_index << " with priority of " << max << endl;
         }
         // Priority Queue
         else if (algorithm == "prio") {
