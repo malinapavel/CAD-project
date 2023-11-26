@@ -39,6 +39,10 @@ void Scheduler::initialize()
     for (int i = 0; i<nrQueues; i++) {
         priority[i] = 0;
     }
+
+    prioritySignalHq = registerSignal("prioritySignalHq");
+    prioritySignalMq = registerSignal("prioritySignalMq");
+    prioritySignalLq = registerSignal("prioritySignalLq");
 }
 
 void Scheduler::handleMessage(cMessage *msg)
@@ -50,6 +54,21 @@ void Scheduler::handleMessage(cMessage *msg)
         }
         else if (msg->arrivedOn("rxPriority", i)) {
             priority[i] = msg->par("q1_priority").doubleValue();
+
+            double currPriority = priority[i];
+
+            // Emit signal for data collection
+
+            if (i == 2) {
+                emit(prioritySignalHq, currPriority);
+            }
+            else if (i == 1) {
+                emit(prioritySignalMq, currPriority);
+            }
+            else if (i == 0) {
+                emit(prioritySignalLq, currPriority);
+            }
+
             delete(msg);
         }
     }

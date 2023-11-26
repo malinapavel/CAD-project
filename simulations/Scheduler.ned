@@ -19,6 +19,12 @@ simple Scheduler
         string algorithm = default("wrr");
         double schedulingPeriod @unit(ms) = default(1ms);
         int gateSize=default(3);//me, dt
+        @signal[prioritySignalHq](type="double");
+        @signal[prioritySignalMq](type="double");
+        @signal[prioritySignalLq](type="double");
+        @statistic[currPriorityHq](title="last time served"; source="prioritySignalHq"; record=vector,stats; interpolationmode=none);
+        @statistic[currPriorityMq](title="last time served"; source="prioritySignalMq"; record=vector,stats; interpolationmode=none);
+        @statistic[currPriorityLq](title="last time served"; source="prioritySignalLq"; record=vector,stats; interpolationmode=none);
 
     gates:
         output txScheduling[gateSize];
