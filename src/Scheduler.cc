@@ -85,7 +85,7 @@ void Scheduler::handleMessage(cMessage *msg)
 
         // Weighted Round-Robin
         if (algorithm == "wrr") {
-            for(int i = nrQueues;i>=0;i--){
+            for(int i = nrQueues-1;i>=0;i--){
                 double currPriority = (i+1) * (int)(currSimTime - priority[i]);
                 if(q[i] > 0 && currPriority > max){
                     curr_index = i;
@@ -105,10 +105,21 @@ void Scheduler::handleMessage(cMessage *msg)
         }
         // Priority Queue
         else if (algorithm == "prio") {
-            for (int i = nrQueues; i>=0; i--) {
+            for (int i = nrQueues-1; i>=0; i--) {
                 if (q[i] > 0) {
                     curr_index = i;
                     break;
+                }
+            }
+
+            EV << "Sending to index " << curr_index << " with no. elements of " << q[curr_index] << endl;
+        }
+        else if (algorithm == "longest_queue") {
+            int max_q = 0;
+            for (int i = nrQueues-1; i>=0; i--) {
+                if (q[i] > max_q) {
+                    curr_index = i;
+                    max_q = q[i];
                 }
             }
 

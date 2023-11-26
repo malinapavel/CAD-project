@@ -1,22 +1,22 @@
 version 3
-run Sched1-0-20231126-20:23:28-4988
-attr configname Sched1
-attr datetime 20231126-20:23:28
-attr datetimef 20231126-202328
-attr experiment Sched1
+run Sched3-0-20231126-20:53:12-21628
+attr configname Sched3
+attr datetime 20231126-20:53:12
+attr datetimef 20231126-205312
+attr experiment Sched3
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 4988
+attr processid 21628
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
-config description "wrr config"
+config description "longest_queue config"
 config *.nrHP 1
 config *.nrMP 2
 config *.nrLP 1
@@ -24,7 +24,7 @@ config Network.sources[0].sendIaTime "2 ms"
 config Network.sources[1].sendIaTime "2 ms"
 config Network.sources[2].sendIaTime "2 ms"
 config Network.sources[3].sendIaTime "2 ms"
-config Network.scheduler.algorithm "\"wrr\""
+config Network.scheduler.algorithm "\"longest_queue\""
 config **.scheduler.currPriorityHq.result-recording-modes +histogram
 config **.scheduler.currPriorityMq.result-recording-modes +histogram
 config **.scheduler.currPriorityLq.result-recording-modes +histogram
@@ -32,11 +32,17 @@ config network Network
 config sim-time-limit 100h
 config cpu-time-limit 300s
 
-vector 0 Network.scheduler currPriorityHq:vector ETV
+vector 0 Network.scheduler currPriorityMq:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source prioritySignalMq
+attr title "last time served"
+vector 1 Network.scheduler currPriorityHq:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source prioritySignalHq
 attr title "last time served"
 0	11	0	0
 0	20	1	1
+1	31	2	2
 

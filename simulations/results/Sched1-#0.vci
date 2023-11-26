@@ -1,9 +1,9 @@
-file 1782 1701021665                                            
+file 1215 1701023185                                            
 version 3
-run Sched1-0-20231126-20:00:13-4604
+run Sched1-0-20231126-20:23:28-4988
 attr configname Sched1
-attr datetime 20231126-20:00:13
-attr datetimef 20231126-200013
+attr datetime 20231126-20:23:28
+attr datetimef 20231126-202328
 attr experiment Sched1
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -11,7 +11,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 4604
+attr processid 4988
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -38,17 +38,6 @@ attr interpolationmode none
 attr recordingmode vector
 attr source prioritySignalHq
 attr title "last time served"
-vector 1 Network.scheduler currPriorityMq:vector ETV
-attr interpolationmode none
-attr recordingmode vector
-attr source prioritySignalMq
-attr title "last time served"
-vector 2 Network.scheduler currPriorityLq:vector ETV
-attr interpolationmode none
-attr recordingmode vector
-attr source prioritySignalLq
-attr title "last time served"
-0	1535 126 11 212 0 19 11 0 19 100 1330
-1	1661 83 31 220 2 20 7 2 20 74 1036
-2	1744 36 69 201 6 18 3 6 18 36 504
+0	1193 10 11 11 0 0 1 0 0 0 0
+0	1203 10 20 20 1 1 1 1 1 1 1
 
