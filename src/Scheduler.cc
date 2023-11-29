@@ -99,17 +99,6 @@ void Scheduler::handleMessage(cMessage *msg)
 
             EV << "Sending to index " << curr_index << " with no. elements of " << q[curr_index] << endl;
         }
-        else if (algorithm == "longest_queue") {
-            int max_q = 0;
-            for (int i = nrQueues-1; i>=0; i--) {
-                if (q[i] > max_q) {
-                    curr_index = i;
-                    max_q = q[i];
-                }
-            }
-
-            EV << "Sending to index " << curr_index << " with no. elements of " << q[curr_index] << endl;
-        }
 
         send(cmd, "txScheduling", curr_index);
         scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);

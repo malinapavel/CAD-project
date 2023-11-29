@@ -21,7 +21,6 @@ simple Source
      parameters:
          double sendIaTime @unit(ms) = default(10 ms);
          @display("i=block/source");
-        //volatile double generatorPeriod @unit(ms) = default(100ms);
       
     gates:
         output txPackets;

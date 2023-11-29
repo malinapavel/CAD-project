@@ -72,7 +72,4 @@ network Network
         hpq.txPriority --> scheduler.rxPriority[2];
         mpq.txPriority --> scheduler.rxPriority[1];
         lpq.txPriority --> scheduler.rxPriority[0];
-//        scheduler.txScheduling[i] --> user[i].rxScheduling;
-//        user[i].txPackets --> sink.rxPackets[i];
-
 }

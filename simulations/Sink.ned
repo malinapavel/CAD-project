@@ -17,9 +17,7 @@ simple Sink
  parameters:
         int gateSize=default(3);
         @display("i=block/sink");
-      //  @signal[lifetime](type="simtime_t");
-      //  @statistic[lifetime](title="lifetime of arrived jobs"; unit=s; record=vector,mean,max; interpolationmode=none);
-       @signal[prioritySignalHq](type="double");
+       	@signal[prioritySignalHq](type="double");
         @signal[prioritySignalMq](type="double");
         @signal[prioritySignalLq](type="double");
         @statistic[currPriorityHq](title="last time served"; source="prioritySignalHq"; record=vector,stats; interpolationmode=none);

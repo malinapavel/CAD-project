@@ -27,8 +27,6 @@ class MyQ : public cSimpleModule
 {
 
   protected:
-     //cMessage *msgServiced;
-    // cMessage *endServiceMsg;
     cQueue queue;
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
