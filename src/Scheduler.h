@@ -33,9 +33,6 @@ private:
     int nrQueues;
     int q[3];
     double priority[3];
-    simsignal_t prioritySignalHq;
-    simsignal_t prioritySignalMq;
-    simsignal_t prioritySignalLq;
 
   protected:
     virtual void initialize();

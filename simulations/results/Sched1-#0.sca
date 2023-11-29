@@ -1,8 +1,8 @@
 version 3
-run Sched1-0-20231126-20:23:28-4988
+run Sched1-0-20231129-14:48:40-18120
 attr configname Sched1
-attr datetime 20231126-20:23:28
-attr datetimef 20231126-202328
+attr datetime 20231129-14:48:40
+attr datetimef 20231129-144840
 attr experiment Sched1
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network
-attr processid 4988
+attr processid 18120
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -20,10 +20,10 @@ config description "wrr config"
 config *.nrHP 1
 config *.nrMP 2
 config *.nrLP 1
-config Network.sources[0].sendIaTime "2 ms"
-config Network.sources[1].sendIaTime "2 ms"
-config Network.sources[2].sendIaTime "2 ms"
-config Network.sources[3].sendIaTime "2 ms"
+config Network.sources[0].sendIaTime "6 ms"
+config Network.sources[1].sendIaTime "6 ms"
+config Network.sources[2].sendIaTime "6 ms"
+config Network.sources[3].sendIaTime "6 ms"
 config Network.scheduler.algorithm "\"wrr\""
 config **.scheduler.currPriorityHq.result-recording-modes +histogram
 config **.scheduler.currPriorityMq.result-recording-modes +histogram
@@ -37,101 +37,55 @@ par Network.scheduler algorithm "\"wrr\""
 par Network.scheduler schedulingPeriod 1ms
 attr unit ms
 par Network.scheduler gateSize 3
-statistic Network.scheduler currPriorityLq:stats
-field count 0
-field mean nan
-field stddev nan
-field min nan
-field max nan
-field sum 0
-field sqrsum 0
-attr interpolationmode none
-attr recordingmode stats
-attr source prioritySignalLq
-attr title "last time served"
-statistic Network.scheduler currPriorityLq:histogram
-field count 0
-field mean nan
-field stddev nan
-field min nan
-field max nan
-field sum 0
-field sqrsum 0
-attr interpolationmode none
-attr recordingmode histogram
-attr source prioritySignalLq
-attr title "last time served"
-bin	-inf	0
-bin	0	0
-bin	1	0
-statistic Network.scheduler currPriorityMq:stats
-field count 0
-field mean nan
-field stddev nan
-field min nan
-field max nan
-field sum 0
-field sqrsum 0
-attr interpolationmode none
-attr recordingmode stats
-attr source prioritySignalMq
-attr title "last time served"
-statistic Network.scheduler currPriorityMq:histogram
-field count 0
-field mean nan
-field stddev nan
-field min nan
-field max nan
-field sum 0
-field sqrsum 0
-attr interpolationmode none
-attr recordingmode histogram
-attr source prioritySignalMq
-attr title "last time served"
-bin	-inf	0
-bin	0	0
-bin	1	0
-statistic Network.scheduler currPriorityHq:stats
-field count 2
-field mean 0.5
-field stddev 0.70710678118655
-field min 0
-field max 1
-field sum 1
-field sqrsum 1
-attr interpolationmode none
-attr recordingmode stats
-attr source prioritySignalHq
-attr title "last time served"
-statistic Network.scheduler currPriorityHq:histogram
-field count 2
-field mean 0.5
-field stddev 0.70710678118655
-field min 0
-field max 1
-field sum 1
-field sqrsum 1
-attr interpolationmode none
-attr recordingmode histogram
-attr source prioritySignalHq
-attr title "last time served"
-bin	-inf	0
-bin	0	1
-bin	1	1
-bin	2	0
 par Network.sink typename "\"Sink\""
 par Network.sink gateSize 3
+statistic Network.sink currPriorityLq:stats
+field count 646
+field mean 34.079092514283
+field stddev 21.515108320976
+field min 0.106254153279
+field max 89.69075658059
+field sum 22015.093764227
+field sqrsum 1048824.8436125
+attr interpolationmode none
+attr recordingmode stats
+attr source prioritySignalLq
+attr title "last time served"
+statistic Network.sink currPriorityMq:stats
+field count 1347
+field mean 57.790480578227
+field stddev 32.019279553305
+field min 0.112016221135
+field max 122.27775714479
+field sum 77843.777338872
+field sqrsum 5878594.6205876
+attr interpolationmode none
+attr recordingmode stats
+attr source prioritySignalMq
+attr title "last time served"
+statistic Network.sink currPriorityHq:stats
+field count 622
+field mean 1.4968615172334
+field stddev 1.0916668057969
+field min 0.001424844838
+field max 6.67028546277
+field sum 931.04786371918
+field sqrsum 2133.7180315433
+attr interpolationmode none
+attr recordingmode stats
+attr source prioritySignalHq
+attr title "last time served"
 par Network.sources[0] typename "\"Source\""
-par Network.sources[0] sendIaTime 2ms
+par Network.sources[0] sendIaTime 6ms
 attr unit ms
 par Network.sources[1] typename "\"Source\""
-par Network.sources[1] sendIaTime 2ms
+par Network.sources[1] sendIaTime 6ms
 attr unit ms
 par Network.sources[2] typename "\"Source\""
-par Network.sources[2] sendIaTime 2ms
+par Network.sources[2] sendIaTime 6ms
 attr unit ms
 par Network.sources[3] typename "\"Source\""
-par Network.sources[3] sendIaTime 2ms
+par Network.sources[3] sendIaTime 6ms
 attr unit ms
 par Network.hpq typename "\"MyQ\""
 par Network.hpq NrInputs 1

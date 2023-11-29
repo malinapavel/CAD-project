@@ -20,12 +20,26 @@ Define_Module(Sink);
 void Sink::initialize()
 {
    // lifetimeSignal = registerSignal("lifetime");
+    prioritySignalHq = registerSignal("prioritySignalHq");
+    prioritySignalMq = registerSignal("prioritySignalMq");
+    prioritySignalLq = registerSignal("prioritySignalLq");
 }
 
 void Sink::handleMessage(cMessage *msg)
 {
-    simtime_t lifetime = simTime() - msg->getCreationTime();
+      simtime_t lifetime = simTime() - msg->getCreationTime();
+
       EV << "Received " << msg->getName() << ", lifetime: " << lifetime << "s" << endl;
-    //  emit(lifetimeSignal, lifetime);
+
+      if (msg->arrivedOn("rxPackets", 2)){
+          emit(prioritySignalHq, lifetime);
+      }
+      else if (msg->arrivedOn("rxPackets", 1)){
+          emit(prioritySignalMq, lifetime);
+      }
+      else {
+          emit(prioritySignalLq, lifetime);
+      }
+
       delete msg;
 }

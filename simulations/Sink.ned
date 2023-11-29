@@ -19,6 +19,12 @@ simple Sink
         @display("i=block/sink");
       //  @signal[lifetime](type="simtime_t");
       //  @statistic[lifetime](title="lifetime of arrived jobs"; unit=s; record=vector,mean,max; interpolationmode=none);
+       @signal[prioritySignalHq](type="double");
+        @signal[prioritySignalMq](type="double");
+        @signal[prioritySignalLq](type="double");
+        @statistic[currPriorityHq](title="last time served"; source="prioritySignalHq"; record=vector,stats; interpolationmode=none);
+        @statistic[currPriorityMq](title="last time served"; source="prioritySignalMq"; record=vector,stats; interpolationmode=none);
+        @statistic[currPriorityLq](title="last time served"; source="prioritySignalLq"; record=vector,stats; interpolationmode=none);
     gates:
         input rxPackets[gateSize];
 

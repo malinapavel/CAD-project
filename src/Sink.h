@@ -27,6 +27,9 @@ class Sink : public cSimpleModule
 {
 private:
   //  simsignal_t lifetimeSignal;
+    simsignal_t prioritySignalHq;
+    simsignal_t prioritySignalMq;
+    simsignal_t prioritySignalLq;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

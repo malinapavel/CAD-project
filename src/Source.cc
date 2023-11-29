@@ -37,6 +37,10 @@ void Source::handleMessage(cMessage *msg)
 {
     ASSERT(msg == sendMessageEvent);
 
+    if (simTime() > 4000) {
+        endSimulation();
+    }
+
     int priorityLevel; // Calculate the priority level here for the current user
     //generateIPPacket(priorityLevel);
     cMessage *job = new cMessage("job");

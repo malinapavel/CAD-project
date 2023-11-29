@@ -39,10 +39,6 @@ void Scheduler::initialize()
     for (int i = 0; i<nrQueues; i++) {
         priority[i] = 0;
     }
-
-    prioritySignalHq = registerSignal("prioritySignalHq");
-    prioritySignalMq = registerSignal("prioritySignalMq");
-    prioritySignalLq = registerSignal("prioritySignalLq");
 }
 
 void Scheduler::handleMessage(cMessage *msg)
@@ -58,17 +54,6 @@ void Scheduler::handleMessage(cMessage *msg)
             double currPriority = priority[i];
 
             // Emit signal for data collection
-
-            if (i == 2) {
-                emit(prioritySignalHq, currPriority);
-            }
-            else if (i == 1) {
-                emit(prioritySignalMq, currPriority);
-            }
-            else if (i == 0) {
-                emit(prioritySignalLq, currPriority);
-            }
-
             delete(msg);
         }
     }
@@ -86,7 +71,7 @@ void Scheduler::handleMessage(cMessage *msg)
         // Weighted Round-Robin
         if (algorithm == "wrr") {
             for(int i = nrQueues-1;i>=0;i--){
-                double currPriority = (i+1) * (int)(currSimTime - priority[i]);
+                double currPriority = (i+1) * (double)(currSimTime - priority[i]);
                 if(q[i] > 0 && currPriority > max){
                     curr_index = i;
                     EV << "Curr max: " << max << " updated to " << currPriority << endl;
